@@ -1,0 +1,16 @@
+{
+    "background_color": "rgb(133, 227, 255)",
+    "description": "99x99",
+    "display": "fullscreen",
+    "name": "99x99",
+    "short_name": "99x99",
+    "icons": [
+      {
+        "src": "icon/icon.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      }
+    ],
+    "start_url": "https://mustermaxs.github.io/FH-Trainer2/",
+    "orientation": "portrait"
+  }

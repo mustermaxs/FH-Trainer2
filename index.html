@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="manifest" href="./manifest.webmanifest">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./startbtn.js"></script>
+    <style>
+        body {
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            background-color: rgb(36, 36, 36);
+        }
+
+        .wrapper {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            left: 0;
+            position: absolute;
+
+        }
+
+        #quiz {
+            background-color: rgb(252, 252, 244);
+            width: 100%;
+            height: 100%;
+            border: 1px solid black;
+            border-radius: 2px;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
+            display: flex;
+            font-size: larger;
+
+        }
+
+        #quiz span {
+            display: block;
+        }
+
+        #answer {
+            height: 1.5rem;
+            width: 6rem;
+            text-align: center;
+            padding: 5px;
+        }
+
+        #solution {
+            height: 1.5rem;
+            width: 6rem;
+            padding: 5px;
+            border: 1px solid black;
+            border-radius: 5px;
+        }
+
+        .wrong {
+            border: 3px solid red !important;
+
+        }
+
+        .correct {
+            border: 3px solid blue !important;
+        }
+
+        .timerWrapper {
+            width: 75%;
+            background-color: #cdcdcd;
+            border-radius: 8px;
+            border: none;
+            height: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        #timerfull {
+            width: 0%;
+            background-color: #04b604;
+            border-radius: 8px;
+            border: none;
+            height: 1rem;
+            transition: width 500ms linear;
+        }
+
+        .active {
+            width: 0%;
+            height: 1rem;
+        }
+
+        #settimer {
+            display: block;
+            width: 50%;
+
+        }
+
+        #timerhelp {
+            display: block;
+            position: relative;
+            /* left: 0px; */
+            bottom: -3rem;
+            width: 2rem;
+            padding: 2px;
+            color: white;
+            background-color: rgb(38, 98, 248);
+            border-radius: 10px;
+            text-align: center;
+            /* align-self: center; */
+            /* justify-self: center; */
+            margin: 0 auto;
+            opacity: 0;
+            transition: opacity 150ms;
+        }
+
+        #settimer {
+            margin-top: 2rem;
+
+        }
+
+        .vkeyboardWrapper {
+            width: 100%;
+    background-color: #333d45;
+    display: grid;
+    /* flex-direction: column; */
+    font-family: Helvetica;
+    padding: 0.5rem;
+    /* height: 100%; */
+    /* grid-template-rows: auto auto; */
+    /* flex-wrap: wrap; */
+    justify-content: center;
+    grid-template-columns: auto auto;
+    -webkit-user-select: none; /* Safari */        
+-moz-user-select: none; /* Firefox */
+-ms-user-select: none; /* IE10+/Edge */
+user-select: none; /* Standard */
+
+        }
+
+        .keyboardrow {
+            display: block;
+            clear: left;
+
+        }
+
+        .keyboardrow.r {
+            display: flex;
+    /* height: inherit; */
+    /* grid-row: 2; */
+    grid-column: 2;
+    flex-direction: column;
+    position: relative;
+    justify-content: center;
+    align-content: flex-end;
+    align-items: flex-end;
+
+
+
+        }
+
+        .keyboardrow span {
+            display: block;
+            float: left;
+            margin: 2px 2px 2px;
+            width: fit-content;
+            height: 1rem;
+            padding: 1rem;
+            border-radius: 5px;
+            /* border: 1px solid #858585; */
+            user-select: none;
+            cursor: pointer;
+            background: #4f5b67;
+            color: ghostwhite;
+        }
+
+        .keyboardrow span.pressed {
+            animation-name: btnpressed;
+        }
+
+        .keyboardrow:last-child {
+            left: 3rem;
+            position: relative;
+        }
+        .vkeyboardWrapperLeft{
+            grid-column: 1;
+    grid-row: 1;
+    position: relative;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div id="quiz">
+            <div class="timerWrapper">
+                <div id="timerfull"></div>
+            </div>
+            <span id="question">11 * 11</span>
+            <span id="solution"></span>
+
+            <form>
+                <input type="number" id="answer" autofocus>
+                <button style="display: none;" type="submit"></button>
+            </form>
+            <!-- <canvas width="200" height="100">
+
+            </canvas> -->
+            <span id="timerhelp">30</span>
+
+            <input type="range" min="5" max="60" step="1" value="30" id="settimer">
+
+            <start-btn></start-btn>
+            <div class="vkeyboardWrapper">
+                <div class="keyboardrow r">
+                    <span style="font-weight: bold;" data-key="del">&#8592;</span>
+                    <span data-key="enter">Enter</span>
+                </div>
+                <div class="vkeyboardWrapperLeft">
+                    <div class="keyboardrow">
+                        <span data-key="7">7</span>
+                        <span data-key="8">8</span>
+                        <span data-key="9">9</span>
+                    </div>
+                    <div class="keyboardrow">
+                        <span data-key="4">4</span>
+                        <span data-key="5">5</span>
+
+                        <span data-key="6">6</span>
+                    </div>
+                    <div class="keyboardrow">
+                        <span data-key="1">1</span>
+                        <span data-key="2">2</span>
+                        <span data-key="3">3</span>
+
+                    </div>
+                    <div class="keyboardrow">
+                        <span data-key="0">0</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+</body>
+<script src="./timer.js"></script>
+<script src="./draw.js"></script>
+<script>
+    const evType = eventType();
+    const questionElem = document.querySelector("#question")
+    const answer = document.querySelector("#answer")
+    const solutionElem = document.querySelector("#solution")
+    const timerHelp = document.querySelector("#timerhelp")
+    const timer = new Timer();
+    const startbtn = document.querySelector("start-btn");
+
+    const setTimerElem = document.querySelector("#settimer");
+
+
+
+
+
+    function Questions() {
+        var z1;
+        var z2;
+        var solution;
+
+
+
+        const genQuestion = () => {
+            z1 = getRandomInt(3, 100);
+            z2 = getRandomInt(3, 100);
+            solution = z1 * z2;
+        }
+
+        const render = () => {
+            questionElem.textContent = `${z1} * ${z2}`;
+
+        }
+        const showSolution = () => {
+            solutionElem.textContent = solution;
+        }
+
+        const checkSolution = (ev) => {
+            // var p= new Promise((res, rej) => {
+            if (solution == answer.value) {
+                return true;
+            }
+            else {
+                return false
+            }
+
+
+        }
+        // checkSolution();
+
+        return {
+            render: () => {
+                solutionElem.textContent = "";
+                genQuestion();
+                render();
+            },
+            showSolution: () => { showSolution(); },
+            checkSolution: (ev) => { return checkSolution(ev) },
+            getQuestion: () => {
+                return { z1: z1, z2: z2 }
+            }
+        }
+    }
+    function main() {
+        var questions = Questions();
+        var gameActive = true;
+        vKeyBoard();
+        function onChange(ev) {
+            timerHelp.textContent = ev.target.value;
+        }
+
+
+        setTimerElem.addEventListener(evType.down, (ev) => {
+            reset();
+            setTimerElem.addEventListener("input", (ev) => { onChange(ev) })
+            timerHelp.style.opacity = "1";
+        })
+        setTimerElem.addEventListener(evType.up, (ev) => {
+            timer.time = ev.target.value;
+            timerHelp.style.opacity = "0";
+            setTimerElem.removeEventListener("input", onChange)
+        })
+
+
+        const start = () => {
+            questions.render();
+            timer.start();
+        }
+        const reset = () => {
+            timer.reset();
+        }
+        const stop = () => {
+            timer.stop();
+        }
+
+
+        document.addEventListener("timeUp", () => {
+            document.querySelector("form").submit();
+        })
+        document.querySelector("form").addEventListener("submit", (ev) => {
+            ev.preventDefault();
+
+            questions.showSolution();
+            var answerIsCorrect = questions.checkSolution(ev);
+            var answersubmitEvent = new CustomEvent("answersubmit", {
+                detail: {
+                    answerIsCorrect: answerIsCorrect
+                }
+            });
+            document.dispatchEvent(answersubmitEvent)
+            logResults({ answerIsCorrect: answerIsCorrect });
+
+            if (answerIsCorrect) {
+                stop();
+                solutionElem.className = "correct";
+                setTimeout(() => {
+                    solutionElem.className = "";
+                    answer.value = "";
+                    solution.textContent = "";
+                    start()
+                }, 1800)
+            }
+            else {
+
+                stop()
+                solutionElem.className = "wrong"
+                questions.showSolution();
+                setTimeout(() => {
+                    start(); solutionElem.className = "";
+                    answer.value = ""
+                    solution.textContent = ""
+                    start()
+                }, 1800)
+            }
+        });
+
+
+        document.querySelector("start-btn").addEventListener(evType.click, (ev) => {
+            switch (ev.target.status) {
+                case "active":
+                    start();
+                    break;
+                case "reset":
+                    reset();
+                    break;
+
+            }
+        })
+
+    }
+
+    function logResults(data) {
+        var stats = localStorage.getItem("stats");
+        if (stats === null) {
+            stats = [];
+        }
+        stats = JSON.parse(stats);
+        stats[stats.length] = data;
+        window.localStorage.setItem("stats", JSON.stringify(stats));
+    }
+
+    function getStats() {
+        var counter = 0;
+        var stats = localStorage.getItem("stats");
+        stats = JSON.parse(stats);
+        const statsLength = stats.length
+
+        stats.forEach((stat) => {
+            if (stat["answerIsCorrect"]) {
+                counter += 1;
+            }
+        })
+        console.log(`Statistik:\nRichtig: ${counter}\nFalsch: ${statsLength - counter - 1}\nDurchschnitt: ${counter / statsLength}`)
+        return stats;
+    }
+    // data = [
+    //     90, 100, 90, 150, 156, 110, 120, 111,
+
+    // ]
+    // diagram.drawData(data)
+
+    main()
+
+
+
+    // function checkSolution() {
+    //     document.querySelector("form").addEventListener("submit", (ev) => {
+    //         ev.preventDefault();
+    //         if (solutionElem.value == solution) {
+    //             return true;
+    //         }
+    //         return false;
+    //     })
+    // }
+
+
+
+    function enter() {
+        return new KeyboardEvent('keydown', {
+            code: 'Enter',
+            key: 'Enter',
+            charCode: 13,
+            keyCode: 13,
+            view: window,
+            bubbles: true
+        })
+    }
+
+    function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+    function vKeyBoard() {
+        const vKeys = document.querySelectorAll(".keyboardrow span");
+        vKeys.forEach((key) => {
+            key.addEventListener(evType.click, (ev) => {
+                var keyPressed = ev.target.dataset.key;
+                switch (keyPressed) {
+                    case "del":
+                        answer.value = answer.value.substring(0, answer.value.length - 1);
+                        break;
+                    case "enter":
+                        document.querySelector("button[type=submit]").click();
+                        break;
+                    default:
+                        answer.value += keyPressed;
+                        break;
+                }
+            })
+        })
+    }
+</script>
+
+
+</html>
