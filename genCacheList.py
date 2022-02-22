@@ -12,7 +12,7 @@ import re
 # !!!!!!!!!!!!!!!
 
 
-ignoreFiles = ["genCacheList", "draw", "register", "cacheablefiles"]
+ignoreFiles = ["genCacheList", "draw", "register", "cacheablefiles", "git"]
 listOfAllFiles = []
 def listAllFiles(file):
     file = "/" + file
