@@ -51,6 +51,11 @@
             width: 6rem;
             text-align: center;
             padding: 5px;
+            border-radius: 5px;
+            border: transparent;
+            box-shadow: inset 0px 0px 2px rgb(97, 97, 97);
+            background-color: transparent;
+
         }
 
         #solution {
@@ -62,12 +67,12 @@
         }
 
         .wrong {
-            border: 3px solid red !important;
+            background: rgba(255, 17, 17, 0.549);
 
         }
 
         .correct {
-            border: 3px solid blue !important;
+            background: rgba(4, 131, 4, 0.549);
         }
 
         .timerWrapper {
@@ -204,7 +209,7 @@ user-select: none; /* Standard */
                 <div id="timerfull"></div>
             </div>
             <span id="question">11 * 11</span>
-            <span id="solution"></span>
+            <!-- <span id="solution"></span> -->
 
             <form>
                 <input type="number" id="answer" autofocus>
@@ -287,7 +292,7 @@ user-select: none; /* Standard */
 
         }
         const showSolution = () => {
-            solutionElem.textContent = solution;
+            answer.value = solution;
         }
 
         const checkSolution = (ev) => {
@@ -305,7 +310,7 @@ user-select: none; /* Standard */
 
         return {
             render: () => {
-                solutionElem.textContent = "";
+                answer.value = "";
                 genQuestion();
                 render();
             },
@@ -355,8 +360,9 @@ user-select: none; /* Standard */
         document.querySelector("form").addEventListener("submit", (ev) => {
             ev.preventDefault();
 
-            questions.showSolution();
             var answerIsCorrect = questions.checkSolution(ev);
+            questions.showSolution();
+
             var answersubmitEvent = new CustomEvent("answersubmit", {
                 detail: {
                     answerIsCorrect: answerIsCorrect
@@ -367,23 +373,22 @@ user-select: none; /* Standard */
 
             if (answerIsCorrect) {
                 stop();
-                solutionElem.className = "correct";
+                answer.className = "correct";
                 setTimeout(() => {
-                    solutionElem.className = "";
+                    answer.className = "";
                     answer.value = "";
-                    solution.textContent = "";
                     start()
                 }, 1800)
             }
             else {
 
                 stop()
-                solutionElem.className = "wrong"
+                answer.className = "wrong"
                 questions.showSolution();
                 setTimeout(() => {
-                    start(); solutionElem.className = "";
+                    start(); answer.className = "";
                     answer.value = ""
-                    solution.textContent = ""
+                    
                     start()
                 }, 1800)
             }
