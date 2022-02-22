@@ -1,10 +1,10 @@
 var CACHE_NAME = "fh2-trainer-v0";
 var CACHED_URLS = [
-  "/fh2/index.html",
-  "/fh2/manifest.webmanifest",
-  "/fh2/startbtn.js",
-  "/fh2/sw.js",
-  "/fh2/timer.js",
+  "/index.html",
+  "/manifest.webmanifest",
+  "/startbtn.js",
+  "/sw.js",
+  "/timer.js",
 ];
 
 self.addEventListener("install", function (event) {
