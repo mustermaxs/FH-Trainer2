@@ -1,7 +1,9 @@
 var CACHE_NAME = "fh2-trainer-v0";
 var CACHED_URLS = [
+  "/icon/icon.png",
   "/index.html",
   "/manifest.webmanifest",
+  "/README.md",
   "/startbtn.js",
   "/sw.js",
   "/timer.js",
