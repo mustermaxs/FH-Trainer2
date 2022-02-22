@@ -166,9 +166,9 @@ user-select: none; /* Standard */
             display: block;
             float: left;
             margin: 2px 2px 2px;
-            width: fit-content;
+            width: 1;
             height: 1rem;
-            padding: 1rem;
+            padding: 1.7rem;
             border-radius: 5px;
             /* border: 1px solid #858585; */
             user-select: none;
@@ -176,14 +176,18 @@ user-select: none; /* Standard */
             background: #4f5b67;
             color: ghostwhite;
         }
+        .invisiblebtn {
+            margin-right: 13px !important;
+            background-color: transparent !important;
+
+        }
 
         .keyboardrow span.pressed {
             animation-name: btnpressed;
         }
 
         .keyboardrow:last-child {
-            left: 3rem;
-            position: relative;
+
         }
         .vkeyboardWrapperLeft{
             grid-column: 1;
@@ -238,7 +242,9 @@ user-select: none; /* Standard */
 
                     </div>
                     <div class="keyboardrow">
+                        <span class="invisiblebtn">  </span>
                         <span data-key="0">0</span>
+                        <span class="invisiblebtn">  </span>
                     </div>
                 </div>
 
@@ -461,7 +467,7 @@ user-select: none; /* Standard */
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
     function vKeyBoard() {
-        const vKeys = document.querySelectorAll(".keyboardrow span");
+        const vKeys = document.querySelectorAll(".keyboardrow span[data-key]");
         vKeys.forEach((key) => {
             key.addEventListener(evType.click, (ev) => {
                 var keyPressed = ev.target.dataset.key;
